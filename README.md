@@ -21,8 +21,7 @@ The model compares a **gliding configuration**, in which the V-tail contributes 
 ### Aircraft Concept
 
 <p align="center">
-  <img src="https://blogs.mathworks.com/student-lounge/files/2025/01/25jan7_2.png" alt="AirSloths water-propelled aircraft CAD model with deployable V-tail" width="420" />
-</p>
+  <img src="Simulating-Water-Propelled-Aircraft-for-ASRW/Images/glider%20parts.jpeg" alt="AirSloths water-propelled aircraft CAD model with deployable V-tail" width="420" />
 <p align="center"><em>AirSloths rocket–glider CAD model. The deployable V-tail supports the transition from powered ascent to gliding descent.</em></p>
 
 ### Flight Simulation — Animated Results
