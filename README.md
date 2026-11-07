@@ -1,99 +1,92 @@
-# Water-Propelled Aircraft Flight Simulation
-### Airbus Sloshing Rocket Workshop (ASRW) 2023 | Team AirSloths
+# Water-Propelled Aircraft | MATLAB & Simulink Flight Simulation
 
-**MATLAB · Simulink · Digital DATCOM · Flight Dynamics · Aerospace Design**
+### Airbus Sloshing Rocket Workshop 2023 · Team AirSloths
 
-> **1st place — Airbus Sloshing Rocket Workshop 2023, Belgrade**  
-> Developed by **Vincenzo Junior Di Rosa** and **Piercarlo Mirto** as part of Team AirSloths, University of Naples Federico II.
+**MATLAB · Simulink · Aerospace Blockset · Digital DATCOM · Flight Dynamics**
 
-![Water-propelled aircraft flight simulation](https://blogs.mathworks.com/student-lounge/files/2025/01/25jan7_6.gif)
+> **1st Place — Airbus Sloshing Rocket Workshop 2023, Belgrade**  
+> A flight-dynamics and simulation study developed by **Vincenzo Junior Di Rosa** and **Piercarlo Mirto**, University of Naples Federico II.
 
-## Project Overview
+**[Read our article on the official MathWorks Student Lounge](https://blogs.mathworks.com/student-lounge/2025/01/07/simulating-water-propelled-aircraft-for-airbus-sloshing-rocket-workshop/)** · **[Explore the complete Airbus workshop project](https://github.com/vincenzodirosaj/Airbus-Sloshing-Rocket-Workshop)** · **[View the original MATLAB/Simulink code](https://github.com/VincenzoPiercarlo/Simulating-Water-Propelled-Aircraft-for-ASRW)**
 
-This project models the flight dynamics of a **water-propelled rocket–glider** developed for the 2023 Airbus Sloshing Rocket Workshop. The objective was to assess how aircraft geometry and a **deployable V-tail** affect flight stability, trajectory, and range.
+## Overview
 
-A MATLAB/Simulink simulation framework was developed to compare two flight configurations:
+This repository focuses on the **mathematical modeling and MATLAB/Simulink flight simulation** of the water-propelled rocket–glider designed by Team AirSloths for the 2023 Airbus Sloshing Rocket Workshop.
 
-- **Gliding mode:** the V-tail deploys to generate aerodynamic forces and pitching moments that support the descent and pull-up maneuver.
-- **Non-gliding mode:** the same basic model is evaluated without the tail's aerodynamic contribution.
+While the [main Airbus Sloshing Rocket Workshop repository](https://github.com/vincenzodirosaj/Airbus-Sloshing-Rocket-Workshop) presents the broader aircraft development and competition project, **this repository documents its simulation-focused contribution**: evaluating the effect of a deployable V-tail on aircraft attitude, trajectory, and flight range.
 
-The simulation supported iterative design decisions for the team's competition aircraft.
+The model compares a **gliding configuration**, in which the V-tail contributes aerodynamic forces and pitching moments, against a **non-gliding reference configuration** without that tail contribution.
 
-## Engineering Approach
 
-The model integrates several disciplines:
+### Aircraft Concept
 
-| Area | Implementation |
+<p align="center">
+  <img src="https://blogs.mathworks.com/student-lounge/files/2025/01/25jan7_2.png" alt="AirSloths water-propelled aircraft CAD model with deployable V-tail" width="420" />
+</p>
+<p align="center"><em>AirSloths rocket–glider CAD model. The deployable V-tail supports the transition from powered ascent to gliding descent.</em></p>
+
+### Flight Simulation Preview
+
+<p align="center">
+  <img src="https://blogs.mathworks.com/student-lounge/files/2025/01/25jan7_6.gif" alt="MATLAB and Simulink flight simulation animation showing the aircraft trajectories" width="620" />
+</p>
+<p align="center"><em>Flight-dynamics animation from our MathWorks Student Lounge article.</em></p>
+
+
+## Simulink Flight Dynamics Model
+
+The simulation was built around `simulateFlight.slx`, integrating MATLAB-generated input data with a **variable-mass, longitudinal 3-DOF flight-dynamics model**.
+
+
+<p align="center">
+  <img src="https://blogs.mathworks.com/student-lounge/files/2025/01/25jan7_4.png" alt="Simulink top-level flight simulation with gliding and non-gliding configurations" width="760" />
+</p>
+<p align="center"><em>Simulink architecture comparing gliding and non-gliding configurations, including stop conditions and 3-DOF animation.</em></p>
+
+
+| Model component | Implementation |
 | --- | --- |
-| Aircraft geometry | Component-based geometric and material definitions |
-| Mass properties | Center of gravity and inertia calculations |
-| Aerodynamics | Digital DATCOM coefficients imported into MATLAB and represented using Simulink lookup tables |
-| Propulsion | Water-rocket thrust profile, including thrust eccentricity and its pitching moment |
-| Flight dynamics | Variable-mass, 3-DOF equations of motion in Simulink |
-| Configuration analysis | Eight V-tail folding configurations between 0° (closed) and 75° (fully deployed) |
-| Visualization | Trajectory comparison and 3-DOF flight animation |
+| **Aircraft mass properties** | Component-based geometry, center of gravity, and inertia calculations in MATLAB |
+| **Aerodynamics** | Digital DATCOM coefficients imported into MATLAB and supplied to Simulink through lookup tables |
+| **Propulsion** | Water-rocket thrust and mass-flow evolution, including the pitching moment due to thrust eccentricity |
+| **Equations of motion** | Variable-mass and variable-inertia 3-DOF dynamics using an Aerospace Blockset block |
+| **V-tail deployment** | Aerodynamic configurations spanning 0° (folded) to 75° (deployed), linked to the vehicle's elevation angle |
+| **Flight evaluation** | Parallel gliding/non-gliding simulation, ground-contact stop conditions, trajectory comparison, and 3-DOF visualization |
 
-### Vehicle Concept
+In Simulink, the **Forces and Moments** subsystem combines aerodynamic and propulsion inputs. The resulting forces and pitching moment feed the equations of motion to determine the aircraft's evolving trajectory and attitude. A launch-phase pitching-moment filter accounts for the initial passage through the launch tube.
 
-The aircraft uses a **foldable V-tail** to transition from a rocket-like ascent configuration to a gliding descent configuration. Its tail opening angle is associated with the vehicle's elevation angle to influence pitching behavior throughout the flight.
+The purpose was to study the transition from a streamlined, rocket-like ascent to a lift-producing gliding descent, including the post-apogee pitch-down and subsequent pull-up maneuver.
 
-The team's physical vehicle used a **2 L PET propulsion bottle**, **0.7 L of water**, and a **10 bar initial pressure**. The design also incorporated a separate tank intended to introduce water sloshing during the competition.
-
-![Aircraft CAD model](Simulating-Water-Propelled-Aircraft-for-ASRW/Images/glider%20parts.jpeg)
+For the detailed model architecture, equations, and illustrations, see the **[MathWorks technical article](https://blogs.mathworks.com/student-lounge/2025/01/07/simulating-water-propelled-aircraft-for-airbus-sloshing-rocket-workshop/)**.
 
 ## Simulation Results
 
-In the reported simulation scenario:
+In the published simulation scenario:
 
-- **+6.545 m flight-range advantage** for the gliding configuration relative to the non-gliding configuration.
-- **8.4987 m maximum altitude** for both simulated configurations.
-- The deployable tail enabled a post-apogee pitch-down and subsequent pull-up maneuver, improving the modeled descent trajectory.
+- **+6.545 m** modeled range improvement with the deployed-tail gliding configuration compared with the non-gliding configuration.
+- **8.4987 m** maximum simulated altitude for both configurations.
+- The deployed V-tail supported a **post-apogee pull-up maneuver**, changing the descent trajectory and improving the modeled range.
 
-The numerical results were approximate and were used to inform the design alongside physical flight testing.
+These values refer to the specific simulated conditions, rather than a generally validated performance gain.
 
-## Assumptions and Scope
+### Model scope
 
-The reported flight model adopts four simplifying assumptions:
+The model assumes a **rigid aircraft**, **no liquid sloshing**, **no avionics latency**, and **longitudinal symmetry**. Although sloshing was central to the overall competition, this particular simulation focuses on flight dynamics and tail-deployment effects; it does **not** directly resolve sloshing dynamics.
 
-1. The aircraft is treated as a **rigid body**.
-2. **Water sloshing is neglected** in the simulation.
-3. **Avionics latency is neglected**.
-4. The aircraft is assumed to have **longitudinal symmetry**.
+## MathWorks Mentorship & Publication
 
-**Important:** Although water sloshing was a central requirement of the *competition*, the published simulation **does not directly model sloshing dynamics**. The results therefore describe the simplified flight-dynamics model, not a validated sloshing-response simulation.
+During the project, we benefited from **technical mentoring and guidance from MathWorks**, including support from **[Khushin Lakhara](https://www.linkedin.com/in/khushin/)**, Aerospace Engineer at MathWorks, in developing our MATLAB/Simulink simulation approach.
 
-## Code and Resources
+Our work was subsequently featured on the **official MathWorks Student Lounge** in the article *[Simulating Water-Propelled Aircraft for Airbus Sloshing Rocket Workshop](https://blogs.mathworks.com/student-lounge/2025/01/07/simulating-water-propelled-aircraft-for-airbus-sloshing-rocket-workshop/)* (7 January 2025).
 
-The original MATLAB/Simulink implementation is available in the co-authored project repository:
+## Project Links & Credits
 
-**[View the original source code on GitHub](https://github.com/VincenzoPiercarlo/Simulating-Water-Propelled-Aircraft-for-ASRW)**
-
-Key files include:
-
-| File | Purpose |
-| --- | --- |
-| `main.mlx` | Main MATLAB Live Script |
-| `defineAircraftComponents.mlx` | Geometric definition of aircraft components |
-| `defineMaterialDensities.mlx` | Material-property inputs |
-| `buildAircraft.mlx` | Aircraft configuration assembly |
-| `setupInertia.mlx` | Mass and inertia properties |
-| `setupAerodynamics.mlx` | Aerodynamic data preparation |
-| `setupPropulsion.mlx` | Propulsion data preparation |
-| `massflowRate.mlx` | Mass-flow modeling |
-| `simulateFlight.slx` | Simulink flight-dynamics model |
-
-For setup, code requirements, and execution details, consult the **original repository**. The project uses MATLAB and Simulink, including functionality from Aerospace Toolbox and Aerospace Blockset.
-
-## Publications and Demonstration
-
-- **MathWorks Student Lounge:** [Simulating Water-Propelled Aircraft for Airbus Sloshing Rocket Workshop](https://blogs.mathworks.com/student-lounge/2025/01/07/simulating-water-propelled-aircraft-for-airbus-sloshing-rocket-workshop/) (January 2025).
-- **Flight-test video:** [AirSloths Flight Tests](https://www.youtube.com/watch?v=y8TNEQP7Qss).
-- **Original source repository:** [VincenzoPiercarlo / Simulating-Water-Propelled-Aircraft-for-ASRW](https://github.com/VincenzoPiercarlo/Simulating-Water-Propelled-Aircraft-for-ASRW).
-
-## Contributors and Attribution
+- **[Complete aircraft and competition project](https://github.com/vincenzodirosaj/Airbus-Sloshing-Rocket-Workshop)** — broader design and development context.
+- **[Original co-authored simulation source](https://github.com/VincenzoPiercarlo/Simulating-Water-Propelled-Aircraft-for-ASRW)** — MATLAB Live Scripts and Simulink model.
+- **[Official MathWorks article](https://blogs.mathworks.com/student-lounge/2025/01/07/simulating-water-propelled-aircraft-for-airbus-sloshing-rocket-workshop/)** — technical walkthrough and simulation results.
 
 **Simulation development:** Vincenzo Junior Di Rosa and Piercarlo Mirto.  
-**Competition project:** Team AirSloths, University of Naples Federico II.
+**Competition team:** AirSloths — University of Naples Federico II.  
+**MathWorks mentor:** [Khushin Lakhara](https://www.linkedin.com/in/khushin/).
 
-This README is a portfolio overview of the co-authored work. The original repository contains the implementation and its license; consult it before reusing or redistributing the code.
-
+> This repository presents the simulation work as part of a broader team project. The original co-authored repository remains the reference for the implementation and applicable license.
