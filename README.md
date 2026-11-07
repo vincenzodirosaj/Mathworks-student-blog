@@ -80,8 +80,8 @@ For the detailed model architecture, equations, and illustrations, see the **[Ma
 
 In the published simulation scenario:
 
-- **+6.545 m** modeled range improvement with the deployed-tail gliding configuration compared with the non-gliding configuration.
-- **8.4987 m** maximum simulated altitude for both configurations.
+- **+6.5 m** modeled range improvement with the deployed-tail gliding configuration compared with the non-gliding configuration.
+- **8.5 m** maximum simulated altitude for both configurations.
 - The deployed V-tail supported a **post-apogee pull-up maneuver**, changing the descent trajectory and improving the modeled range.
 
 These values refer to the specific simulated conditions, rather than a generally validated performance gain.
