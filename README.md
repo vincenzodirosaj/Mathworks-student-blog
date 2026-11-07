@@ -25,24 +25,35 @@ The model compares a **gliding configuration**, in which the V-tail contributes 
 </p>
 <p align="center"><em>AirSloths rocket–glider CAD model. The deployable V-tail supports the transition from powered ascent to gliding descent.</em></p>
 
-### Flight Simulation Preview
+### Flight Simulation — Animated Results
 
 <p align="center">
   <img src="https://blogs.mathworks.com/student-lounge/files/2025/01/25jan7_6.gif" alt="MATLAB and Simulink flight simulation animation showing the aircraft trajectories" width="620" />
 </p>
-<p align="center"><em>Flight-dynamics animation from our MathWorks Student Lounge article.</em></p>
+<p align="center"><em>Embedded animated GIF of the simulated trajectories, originally published in our MathWorks Student Lounge article.</em></p>
 
 
 ## Simulink Flight Dynamics Model
 
-The simulation was built around `simulateFlight.slx`, integrating MATLAB-generated input data with a **variable-mass, longitudinal 3-DOF flight-dynamics model**.
+The flight simulation was implemented in `simulateFlight.slx`, coupling MATLAB-derived aircraft properties, aerodynamic data and propulsion inputs with a **longitudinal, variable-mass 3-DOF model**.
 
+### Simulation architecture
 
 <p align="center">
-  <img src="https://blogs.mathworks.com/student-lounge/files/2025/01/25jan7_4.png" alt="Simulink top-level flight simulation with gliding and non-gliding configurations" width="760" />
+  <img src="https://blogs.mathworks.com/student-lounge/files/2025/01/25jan7_4.png" alt="Simulink top-level model showing gliding and non-gliding configurations, stop conditions and 3-DOF animation" width="760" />
 </p>
-<p align="center"><em>Simulink architecture comparing gliding and non-gliding configurations, including stop conditions and 3-DOF animation.</em></p>
+<p align="center"><em>Figure 1 — Simulink model architecture: parallel gliding and non-gliding flight simulations, stop conditions and trajectory visualization.</em></p>
 
+The two configurations are evaluated under the same initial conditions to isolate the contribution of the deployable V-tail to the resulting flight trajectory.
+
+### Forces, moments and equations of motion
+
+<p align="center">
+  <img src="https://blogs.mathworks.com/student-lounge/files/2025/01/25jan7_5.png" alt="Simulink aircraft dynamics subsystem with aerodynamic and propulsion forces, variable inertia and 3-DOF equations of motion" width="760" />
+</p>
+<p align="center"><em>Figure 2 — Aircraft dynamics subsystem: propulsion and aerodynamic loads feed the 3-DOF equations of motion, with time-varying mass and inertia properties.</em></p>
+
+The model combines aerodynamic forces and pitching moments, water-rocket propulsion and time-dependent inertial properties. A launch-phase pitching-moment filter represents the initial constraint imposed by the launch tube.
 
 | Model component | Implementation |
 | --- | --- |
@@ -52,8 +63,6 @@ The simulation was built around `simulateFlight.slx`, integrating MATLAB-generat
 | **Equations of motion** | Variable-mass and variable-inertia 3-DOF dynamics using an Aerospace Blockset block |
 | **V-tail deployment** | Aerodynamic configurations spanning 0° (folded) to 75° (deployed), linked to the vehicle's elevation angle |
 | **Flight evaluation** | Parallel gliding/non-gliding simulation, ground-contact stop conditions, trajectory comparison, and 3-DOF visualization |
-
-In Simulink, the **Forces and Moments** subsystem combines aerodynamic and propulsion inputs. The resulting forces and pitching moment feed the equations of motion to determine the aircraft's evolving trajectory and attitude. A launch-phase pitching-moment filter accounts for the initial passage through the launch tube.
 
 The purpose was to study the transition from a streamlined, rocket-like ascent to a lift-producing gliding descent, including the post-apogee pitch-down and subsequent pull-up maneuver.
 
